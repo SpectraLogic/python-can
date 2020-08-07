@@ -242,8 +242,9 @@ PCAN_MODE_EXTENDED       = PCAN_MESSAGE_EXTENDED
 # to calculate the BTROBTR1 register for every bit rate and sample point.
 
 PCAN_BAUD_1M             = TPCANBaudrate(0x0014) #   1     MBit/s
-PCAN_BAUD_800K           = TPCANBaudrate(0x0016) # 800     kBit/s
+PCAN_BAUD_800K           = TPCANBaudrate(0x8434) # 800     kBit/s
 PCAN_BAUD_500K           = TPCANBaudrate(0x001C) # 500     kBit/s
+PCAN_BAUD_400K           = TPCANBaudrate(0x807A) # 400     kBit/s
 PCAN_BAUD_250K           = TPCANBaudrate(0x011C) # 250     kBit/s
 PCAN_BAUD_125K           = TPCANBaudrate(0x031C) # 125     kBit/s
 PCAN_BAUD_100K           = TPCANBaudrate(0x432F) # 100     kBit/s

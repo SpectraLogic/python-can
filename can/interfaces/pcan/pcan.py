@@ -53,6 +53,7 @@ log = logging.getLogger('can.pcan')
 pcan_bitrate_objs = {1000000 : PCAN_BAUD_1M,
                       800000 : PCAN_BAUD_800K,
                       500000 : PCAN_BAUD_500K,
+                      400000 : PCAN_BAUD_400K,
                       250000 : PCAN_BAUD_250K,
                       125000 : PCAN_BAUD_125K,
                       100000 : PCAN_BAUD_100K,
