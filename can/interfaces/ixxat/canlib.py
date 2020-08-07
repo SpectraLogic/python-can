@@ -255,6 +255,7 @@ class IXXATBus(BusABC):
             100000: constants.CAN_BT0_100KB,
             125000: constants.CAN_BT0_125KB,
             250000: constants.CAN_BT0_250KB,
+            400000: constants.CAN_BT0_400KB,
             500000: constants.CAN_BT0_500KB,
             800000: constants.CAN_BT0_800KB,
             1000000: constants.CAN_BT0_1000KB
@@ -266,6 +267,7 @@ class IXXATBus(BusABC):
             100000: constants.CAN_BT1_100KB,
             125000: constants.CAN_BT1_125KB,
             250000: constants.CAN_BT1_250KB,
+            400000: constants.CAN_BT1_400KB,
             500000: constants.CAN_BT1_500KB,
             800000: constants.CAN_BT1_800KB,
             1000000: constants.CAN_BT1_1000KB
