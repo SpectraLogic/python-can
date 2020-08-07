@@ -11,7 +11,6 @@ from ctypes import byref
 
 from can import BusABC, Message, CanError
 from .usb2canabstractionlayer import *
-from .serial_selector import find_serial_devices
 
 # Set up logging
 log = logging.getLogger('can.usb2can')
@@ -94,18 +93,13 @@ class Usb2canBus(BusABC):
 
         self.can = Usb2CanAbstractionLayer(dll)
 
-        # get the serial number of the device
+        # Get the serial number of the device
         if "serial" in kwargs:
             device_id = kwargs["serial"]
-        else:
+        elif channel is not None:
             device_id = channel
-
-        # search for a serial number if the device_id is None or empty
-        if not device_id:
-            devices = find_serial_devices()
-            if not devices:
-                raise CanError("could not automatically find any device")
-            device_id = devices[0]
+        else:
+            raise CanError("Device serial number must be specified")
 
         if bitrate_config is not None:
             # This allows for custom bit rates to be set
@@ -165,18 +159,3 @@ class Usb2canBus(BusABC):
 
         if status != CANAL_ERROR_SUCCESS:
             raise CanError("could not shut down bus: status == {}".format(status))
-
-    @staticmethod
-    def _detect_available_configs(serial_matcher=None):
-        """
-        Uses the Windows Management Instrumentation to identify serial devices.
-
-        :param str serial_matcher (optional):
-            search string for automatic detection of the device serial
-        """
-        if serial_matcher:
-            channels = find_serial_devices(serial_matcher)
-        else:
-            channels = find_serial_devices()
-
-        return [{'interface': 'usb2can', 'channel': c} for c in channels]
