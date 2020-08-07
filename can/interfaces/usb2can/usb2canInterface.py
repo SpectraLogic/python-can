@@ -71,6 +71,10 @@ class Usb2canBus(BusABC):
         Bitrate of channel in bit/s. Values will be limited to a maximum of 1000 Kb/s.
         Default is 500 Kbs
 
+    :param str bitrate_config (optional):
+        Bitrate config for the channel. Will override bitrate if both are set.
+        String should be in the following form: '0;{tseg1};{tseg2};{sjw};{brp}'
+
     :param int flags (optional):
         Flags to directly pass to open function of the usb2can abstraction layer.
 
@@ -86,7 +90,7 @@ class Usb2canBus(BusABC):
     """
 
     def __init__(self, channel=None, dll="usb2can.dll", flags=0x00000008,
-                 bitrate=500000, *args, **kwargs):
+                 bitrate=500000, bitrate_config=None, *args, **kwargs):
 
         self.can = Usb2CanAbstractionLayer(dll)
 
@@ -103,8 +107,12 @@ class Usb2canBus(BusABC):
                 raise CanError("could not automatically find any device")
             device_id = devices[0]
 
-        # convert to kb/s and cap: max rate is 1000 kb/s
-        baudrate = min(int(bitrate // 1000), 1000)
+        if bitrate_config is not None:
+            # This allows for custom bit rates to be set
+            baudrate = bitrate_config
+        else:
+            # convert to kb/s and cap: max rate is 1000 kb/s
+            baudrate = min(int(bitrate // 1000), 1000)
 
         self.channel_info = "USB2CAN device {}".format(device_id)
 
