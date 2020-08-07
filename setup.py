@@ -56,7 +56,7 @@ pytest_runner = ["pytest-runner"] if needs_pytest else []
 
 setup(
     # Description
-    name="python-can",
+    name="pythoncan",
     url="https://github.com/hardbyte/python-can",
     description="Controller Area Network interface module for Python",
     long_description=long_description,
