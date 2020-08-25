@@ -31,7 +31,7 @@ The interface supports following devices:
 Bus
 ---
 
-.. autoclass:: can.interfaces.systec.ucanbus.UcanBus
+.. autoclass:: pycan.interfaces.systec.ucanbus.UcanBus
     :members:
 
 Configuration
@@ -73,4 +73,4 @@ Periodic tasks
 
 The driver supports periodic message sending but without the possibility to set
 the interval between messages. Therefore the handling of the periodic messages is done
-by the interface using the :class:`~can.broadcastmanager.ThreadBasedCyclicSendTask`.
+by the interface using the :class:`~pycan.broadcastmanager.ThreadBasedCyclicSendTask`.

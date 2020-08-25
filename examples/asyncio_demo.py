@@ -1,14 +1,14 @@
 import asyncio
-import can
+import pycan
 
 def print_message(msg):
     """Regular callback function. Can also be a coroutine."""
     print(msg)
 
 async def main():
-    can0 = can.Bus('vcan0', bustype='virtual', receive_own_messages=True)
-    reader = can.AsyncBufferedReader()
-    logger = can.Logger('logfile.asc')
+    can0 = pycan.Bus('vcan0', bustype='virtual', receive_own_messages=True)
+    reader = pycan.AsyncBufferedReader()
+    logger = pycan.Logger('logfile.asc')
 
     listeners = [
         print_message,  # Callback function
@@ -17,9 +17,9 @@ async def main():
     ]
     # Create Notifier with an explicit loop to use for scheduling of callbacks
     loop = asyncio.get_event_loop()
-    notifier = can.Notifier(can0, listeners, loop=loop)
+    notifier = pycan.Notifier(can0, listeners, loop=loop)
     # Start sending first message
-    can0.send(can.Message(arbitration_id=0))
+    can0.send(pycan.Message(arbitration_id=0))
 
     print('Bouncing 10 messages...')
     for _ in range(10):

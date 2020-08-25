@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
 This module is testing the serial interface.
 
@@ -12,8 +10,8 @@ from __future__ import division
 import unittest
 from mock import patch
 
-import can
-from can.interfaces.serial.serial_can import SerialBus
+import pycan
+from pycan.interfaces.serial.serial_can import SerialBus
 
 from .message_helper import ComparingMessagesTestCase
 
@@ -52,7 +50,7 @@ class SimpleSerialTestBase(ComparingMessagesTestCase):
         Tests the transfer from 0x00 to 0xFF for a 1 byte payload
         """
         for b in range(0, 255):
-            msg = can.Message(data=[b])
+            msg = pycan.Message(data=[b])
             self.bus.send(msg)
             msg_receive = self.bus.recv()
             self.assertMessageEqual(msg, msg_receive)
@@ -64,7 +62,7 @@ class SimpleSerialTestBase(ComparingMessagesTestCase):
         payload = bytearray()
         for b in range(1, 9):
             payload.append(0)
-            msg = can.Message(data=payload)
+            msg = pycan.Message(data=payload)
             self.bus.send(msg)
             msg_receive = self.bus.recv()
             self.assertMessageEqual(msg, msg_receive)
@@ -73,7 +71,7 @@ class SimpleSerialTestBase(ComparingMessagesTestCase):
         """
         Tests the transfer without payload
         """
-        msg = can.Message(data=None)
+        msg = pycan.Message(data=None)
         self.bus.send(msg)
         msg_receive = self.bus.recv()
         self.assertMessageEqual(msg, msg_receive)
@@ -82,7 +80,7 @@ class SimpleSerialTestBase(ComparingMessagesTestCase):
         """
         Tests the transfer with the lowest arbitration id
         """
-        msg = can.Message(arbitration_id=0)
+        msg = pycan.Message(arbitration_id=0)
         self.bus.send(msg)
         msg_receive = self.bus.recv()
         self.assertMessageEqual(msg, msg_receive)
@@ -91,7 +89,7 @@ class SimpleSerialTestBase(ComparingMessagesTestCase):
         """
         Tests the transfer with the highest arbitration id
         """
-        msg = can.Message(arbitration_id=536870911)
+        msg = pycan.Message(arbitration_id=536870911)
         self.bus.send(msg)
         msg_receive = self.bus.recv()
         self.assertMessageEqual(msg, msg_receive)
@@ -101,7 +99,7 @@ class SimpleSerialTestBase(ComparingMessagesTestCase):
         Tests the transfer with the highest possible timestamp
         """
 
-        msg = can.Message(timestamp=self.MAX_TIMESTAMP)
+        msg = pycan.Message(timestamp=self.MAX_TIMESTAMP)
         self.bus.send(msg)
         msg_receive = self.bus.recv()
         self.assertMessageEqual(msg, msg_receive)
@@ -111,14 +109,14 @@ class SimpleSerialTestBase(ComparingMessagesTestCase):
         """
         Tests for an exception with an out of range timestamp (max + 1)
         """
-        msg = can.Message(timestamp=self.MAX_TIMESTAMP+1)
+        msg = pycan.Message(timestamp=self.MAX_TIMESTAMP+1)
         self.assertRaises(ValueError, self.bus.send, msg)
 
     def test_rx_tx_min_timestamp(self):
         """
         Tests the transfer with the lowest possible timestamp
         """
-        msg = can.Message(timestamp=0)
+        msg = pycan.Message(timestamp=0)
         self.bus.send(msg)
         msg_receive = self.bus.recv()
         self.assertMessageEqual(msg, msg_receive)
@@ -128,7 +126,7 @@ class SimpleSerialTestBase(ComparingMessagesTestCase):
         """
         Tests for an exception with an out of range timestamp (min - 1)
         """
-        msg = can.Message(timestamp=-1)
+        msg = pycan.Message(timestamp=-1)
         self.assertRaises(ValueError, self.bus.send, msg)
 
 

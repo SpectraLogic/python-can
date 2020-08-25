@@ -1,15 +1,13 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 import unittest
 import sys
 from math import isinf, isnan
 from copy import copy, deepcopy
 
-from hypothesis import given, settings, reproduce_failure
+from hypothesis import given, settings
 import hypothesis.strategies as st
 
-from can import Message
+from pycan import Message
 
 
 class TestMessageClass(unittest.TestCase):

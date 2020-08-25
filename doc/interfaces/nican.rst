@@ -18,9 +18,9 @@ This interface adds support for CAN controllers by `National Instruments`_.
 Bus
 ---
 
-.. autoclass:: can.interfaces.nican.NicanBus
+.. autoclass:: pycan.interfaces.nican.NicanBus
 
-.. autoexception:: can.interfaces.nican.NicanError
+.. autoexception:: pycan.interfaces.nican.NicanError
 
 
 .. _National Instruments: http://www.ni.com/can/

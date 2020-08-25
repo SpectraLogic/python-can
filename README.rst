@@ -70,17 +70,17 @@ Example usage
 .. code:: python
 
     # import the library
-    import can
+    import pycan
 
     # create a bus instance
     # many other interfaces are supported as well (see below)
-    bus = can.Bus(interface='socketcan',
-                  channel='vcan0',
-                  receive_own_messages=True)
+    bus = pycan.Bus(interface='socketcan',
+                    channel='vcan0',
+                    receive_own_messages=True)
 
     # send a message
-    message = can.Message(arbitration_id=123, is_extended_id=True,
-                          data=[0x11, 0x22, 0x33])
+    message = pycan.Message(arbitration_id=123, is_extended_id=True,
+                            data=[0x11, 0x22, 0x33])
     bus.send(message, timeout=0.2)
 
     # iterate over received messages
@@ -88,7 +88,7 @@ Example usage
         print("{X}: {}".format(msg.arbitration_id, msg.data))
 
     # or use an asynchronous notifier
-    notifier = can.Notifier(bus, [can.Logger("recorded.log"), can.Printer()])
+    notifier = pycan.Notifier(bus, [pycan.Logger("recorded.log"), pycan.Printer()])
 
 You can find more information in the documentation, online at
 `python-can.readthedocs.org <https://python-can.readthedocs.org/en/stable/>`__.

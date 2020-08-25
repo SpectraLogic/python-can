@@ -2,10 +2,10 @@ Installation
 ============
 
 
-Install ``can`` with ``pip``:
+Install ``pycan`` with ``pip``:
 ::
 
-    $ pip install python-can
+    $ pip install pythoncan
 
 
 As most likely you will want to interface with some hardware, you may

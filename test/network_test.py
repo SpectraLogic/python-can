@@ -1,29 +1,22 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 from __future__ import print_function
 
 import unittest
 import threading
-try:
-    import queue
-except ImportError:
-    import Queue as queue
 import random
-
 import logging
 logging.getLogger(__file__).setLevel(logging.WARNING)
 
-# make a random bool:
+# Make a random bool:
 rbool = lambda: bool(round(random.random()))
 
-import can
+import pycan
 
 channel = 'vcan0'
-can.rc['interface'] = 'virtual'
+pycan.rc['interface'] = 'virtual'
 
 
-@unittest.skipIf('interface' not in can.rc, "Need a CAN interface")
+@unittest.skipIf('interface' not in pycan.rc, "Need a CAN interface")
 class ControllerAreaNetworkTestCase(unittest.TestCase):
     """
     This test ensures that what messages go in to the bus is what comes out.
@@ -48,10 +41,10 @@ class ControllerAreaNetworkTestCase(unittest.TestCase):
                 for b in range(num_messages))
 
     def producer(self, ready_event, msg_read):
-        self.client_bus = can.interface.Bus(channel=channel)
+        self.client_bus = pycan.interface.Bus(channel=channel)
         ready_event.wait()
         for i in range(self.num_messages):
-            m = can.Message(
+            m = pycan.Message(
                 arbitration_id=self.ids[i],
                 is_remote_frame=self.remote_flags[i],
                 is_error_frame=self.error_flags[i],
@@ -80,7 +73,7 @@ class ControllerAreaNetworkTestCase(unittest.TestCase):
         ready = threading.Event()
         msg_read = threading.Event()
 
-        self.server_bus = can.interface.Bus(channel=channel)
+        self.server_bus = pycan.interface.Bus(channel=channel)
 
         t = threading.Thread(target=self.producer, args=(ready, msg_read))
         t.start()

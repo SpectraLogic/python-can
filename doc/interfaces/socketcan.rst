@@ -131,16 +131,16 @@ To spam a bus:
 .. code-block:: python
 
     import time
-    import can
+    import pycan
 
     bustype = 'socketcan'
     channel = 'vcan0'
 
     def producer(id):
         """:param id: Spam the bus with messages including the data id."""
-        bus = can.interface.Bus(channel=channel, bustype=bustype)
+        bus = pycan.interface.Bus(channel=channel, bustype=bustype)
         for i in range(10):
-            msg = can.Message(arbitration_id=0xc0ffee, data=[id, i, 0, 1, 3, 1, 4, 1], is_extended_id=False)
+            msg = pycan.Message(arbitration_id=0xc0ffee, data=[id, i, 0, 1, 3, 1, 4, 1], is_extended_id=False)
             bus.send(msg)
         
         time.sleep(1)
@@ -168,10 +168,10 @@ function:
 
 .. code-block:: python
 
-    import can
+    import pycan
 
     can_interface = 'vcan0'
-    bus = can.interface.Bus(can_interface, bustype='socketcan')
+    bus = pycan.interface.Bus(can_interface, bustype='socketcan')
     message = bus.recv()
 
 By default, this performs a blocking read, which means ``bus.recv()`` won't
@@ -211,13 +211,13 @@ An example that uses the send_periodic is included in ``python-can/examples/cycl
 
 The object returned can be used to halt, alter or cancel the periodic message task.
 
-.. autoclass:: can.interfaces.socketcan.CyclicSendTask
+.. autoclass:: pycan.interfaces.socketcan.CyclicSendTask
 
 
 Bus
 ---
 
-.. autoclass:: can.interfaces.socketcan.SocketcanBus
+.. autoclass:: pycan.interfaces.socketcan.SocketcanBus
 
    .. method:: recv(timeout=None)
 
@@ -226,8 +226,8 @@ Bus
       :param float timeout:
           seconds to wait for a message or None to wait indefinitely
 
-      :rtype: can.Message or None
+      :rtype: pycan.Message or None
       :return:
-          None on timeout or a :class:`can.Message` object.
-      :raises can.CanError:
+          None on timeout or a :class:`pycan.Message` object.
+      :raises pycan.CanError:
           if an error occurred while reading

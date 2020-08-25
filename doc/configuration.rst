@@ -5,30 +5,30 @@ Configuration
 Usually this library is used with a particular CAN interface, this can be
 specified in code, read from configuration files or environment variables.
 
-See :func:`can.util.load_config` for implementation.
+See :func:`pycan.util.load_config` for implementation.
 
 In Code
 -------
 
-The ``can`` object exposes an ``rc`` dictionary which can be used to set
-the **interface** and **channel** before importing from ``can.interfaces``.
+The ``pycan`` object exposes an ``rc`` dictionary which can be used to set
+the **interface** and **channel** before importing from ``pycan.interfaces``.
 
 ::
 
-    import can
-    can.rc['interface'] = 'socketcan'
-    can.rc['channel'] = 'vcan0'
-    can.rc['bitrate'] = 500000
-    from can.interfaces.interface import Bus
+    import pycan
+    pycan.rc['interface'] = 'socketcan'
+    pycan.rc['channel'] = 'vcan0'
+    pycan.rc['bitrate'] = 500000
+    from pycan.interfaces.interface import Bus
 
     bus = Bus()
 
 
 You can also specify the interface and channel for each Bus instance::
 
-    import can
+    import pycan
 
-    bus = can.interface.Bus(bustype='socketcan', channel='vcan0', bitrate=500000)
+    bus = pycan.interface.Bus(bustype='socketcan', channel='vcan0', bitrate=500000)
 
 
 Configuration File
@@ -36,16 +36,16 @@ Configuration File
 
 On Linux systems the config file is searched in the following paths:
 
-#. ``~/can.conf``
-#. ``/etc/can.conf``
-#. ``$HOME/.can``
-#. ``$HOME/.canrc``
+#. ``~/pycan.conf``
+#. ``/etc/pycan.conf``
+#. ``$HOME/.pycan``
+#. ``$HOME/.pycanrc``
 
 On Windows systems the config file is searched in the following paths:
 
-#. ``~/can.conf``
-#. ``can.ini`` (current working directory)
-#. ``$APPDATA/can.ini``
+#. ``~/pycan.conf``
+#. ``pycan.ini`` (current working directory)
+#. ``$APPDATA/pycan.ini``
 
 The configuration file sets the default interface and channel:
 

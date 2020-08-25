@@ -1,15 +1,13 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
-Tests helpers in `can.interfaces.socketcan.socketcan_common`.
+Tests helpers in `pycan.interfaces.socketcan.socketcan_common`.
 """
 
 from __future__ import absolute_import
 
 import unittest
 
-from can.interfaces.socketcan.utils import \
+from pycan.interfaces.socketcan.utils import \
     find_available_interfaces, error_code_to_str
 
 from .config import *

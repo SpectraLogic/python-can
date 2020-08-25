@@ -1,15 +1,13 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
-This module tests :meth:`can.BusABC._matches_filters`.
+This module tests :meth:`pycan.BusABC._matches_filters`.
 """
 
 from __future__ import absolute_import
 
 import unittest
 
-from can import Bus, Message
+from pycan import Bus, Message
 
 from .data.example_data import TEST_ALL_MESSAGES
 

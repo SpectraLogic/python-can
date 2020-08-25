@@ -29,7 +29,7 @@ package.
 Configuration
 -------------
 
-An example `can.ini` file for windows 7:
+An example `pycan.ini` file for windows 7:
 
 ::
 
@@ -41,6 +41,6 @@ An example `can.ini` file for windows 7:
 Bus
 ---
 
-.. autoclass:: can.interfaces.ics_neovi.NeoViBus
+.. autoclass:: pycan.interfaces.ics_neovi.NeoViBus
 
 

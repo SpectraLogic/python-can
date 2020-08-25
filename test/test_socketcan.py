@@ -1,20 +1,16 @@
 """
-Test functions in `can.interfaces.socketcan.socketcan`.
+Test functions in `pycan.interfaces.socketcan.socketcan`.
 """
 import unittest
 
 try:
-    from unittest.mock import Mock
     from unittest.mock import patch
-    from unittest.mock import call
 except ImportError:
-    from mock import Mock
     from mock import patch
-    from mock import call
 
 import ctypes
 
-from can.interfaces.socketcan.socketcan import bcm_header_factory
+from pycan.interfaces.socketcan.socketcan import bcm_header_factory
 
 
 class SocketCANTest(unittest.TestCase):
@@ -25,7 +21,7 @@ class SocketCANTest(unittest.TestCase):
     @patch("ctypes.sizeof")
     @patch("ctypes.alignment")
     def test_bcm_header_factory_32_bit_sizeof_long_4_alignof_long_4(
-        self, ctypes_sizeof, ctypes_alignment
+            self, ctypes_sizeof, ctypes_alignment
     ):
         """This tests a 32-bit platform (ex. Debian Stretch on i386), where:
 
@@ -94,7 +90,7 @@ class SocketCANTest(unittest.TestCase):
     @patch("ctypes.sizeof")
     @patch("ctypes.alignment")
     def test_bcm_header_factory_32_bit_sizeof_long_4_alignof_long_8(
-        self, ctypes_sizeof, ctypes_alignment
+            self, ctypes_sizeof, ctypes_alignment
     ):
         """This tests a 32-bit platform (ex. Raspbian Stretch on armv7l), where:
 
@@ -163,7 +159,7 @@ class SocketCANTest(unittest.TestCase):
     @patch("ctypes.sizeof")
     @patch("ctypes.alignment")
     def test_bcm_header_factory_64_bit_sizeof_long_4_alignof_long_4(
-        self, ctypes_sizeof, ctypes_alignment
+            self, ctypes_sizeof, ctypes_alignment
     ):
         """This tests a 64-bit platform (ex. Ubuntu 18.04 on x86_64), where:
 

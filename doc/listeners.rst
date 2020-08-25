@@ -16,10 +16,10 @@ Subclasses of Listener that do not override **on_message_received** will cause
 :class:`NotImplementedError` to be thrown when a message is received on
 the CAN bus.
 
-.. autoclass:: can.Listener
+.. autoclass:: pycan.Listener
     :members:
 
-There are some listeners that already ship together with `python-can`
+There are some listeners that already ship together with `pythoncan`
 and are listed below.
 Some of them allow messages to be written to files, and the corresponding file
 readers are also documented here.
@@ -34,47 +34,47 @@ readers are also documented here.
 BufferedReader
 --------------
 
-.. autoclass:: can.BufferedReader
+.. autoclass:: pycan.BufferedReader
     :members:
 
-.. autoclass:: can.AsyncBufferedReader
+.. autoclass:: pycan.AsyncBufferedReader
     :members:
 
 
 Logger
 ------
 
-The :class:`can.Logger` uses the following :class:`can.Listener` types to
+The :class:`pycan.Logger` uses the following :class:`pycan.Listener` types to
 create log files with different file types of the messages received.
 
-.. autoclass:: can.Logger
+.. autoclass:: pycan.Logger
     :members:
 
 
 Printer
 -------
 
-.. autoclass:: can.Printer
+.. autoclass:: pycan.Printer
     :members:
 
 
 CSVWriter
 ---------
 
-.. autoclass:: can.CSVWriter
+.. autoclass:: pycan.CSVWriter
     :members:
 
-.. autoclass:: can.CSVReader
+.. autoclass:: pycan.CSVReader
     :members:
 
 
 SqliteWriter
 ------------
 
-.. autoclass:: can.SqliteWriter
+.. autoclass:: pycan.SqliteWriter
     :members:
 
-.. autoclass:: can.SqliteReader
+.. autoclass:: pycan.SqliteReader
     :members:
 
 
@@ -113,7 +113,7 @@ engineered from existing log files. One description of the format can be found `
     Channels will be converted to integers.
 
 
-.. autoclass:: can.ASCWriter
+.. autoclass:: pycan.ASCWriter
     :members:
 
 ASCReader reads CAN data from ASCII log files .asc,
@@ -121,7 +121,7 @@ as further references can-utils can be used:
 `asc2log <https://github.com/linux-can/can-utils/blob/master/asc2log.c>`_,
 `log2asc <https://github.com/linux-can/can-utils/blob/master/log2asc.c>`_.
 
-.. autoclass:: can.ASCReader
+.. autoclass:: pycan.ASCReader
     :members:
 
 
@@ -134,12 +134,12 @@ As specification following references can-utils can be used:
 `log2asc <https://github.com/linux-can/can-utils/blob/master/log2asc.c>`_.
 
 
-.. autoclass:: can.CanutilsLogWriter
+.. autoclass:: pycan.CanutilsLogWriter
     :members:
 
 **CanutilsLogReader** reads CAN data from ASCII log files .log
 
-.. autoclass:: can.CanutilsLogReader
+.. autoclass:: pycan.CanutilsLogReader
     :members:
 
 
@@ -153,10 +153,10 @@ The data is stored in a compressed format which makes it very compact.
 
 .. note:: Channels will be converted to integers.
 
-.. autoclass:: can.BLFWriter
+.. autoclass:: pycan.BLFWriter
     :members:
 
 The following class can be used to read messages from BLF file:
 
-.. autoclass:: can.BLFReader
+.. autoclass:: pycan.BLFReader
     :members:

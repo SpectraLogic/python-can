@@ -1,7 +1,7 @@
 Library API
 ===========
 
-The main objects are the :class:`~can.BusABC` and the :class:`~can.Message`.
+The main objects are the :class:`~pycan.BusABC` and the :class:`~pycan.Message`.
 A form of CAN interface is also required.
 
 .. hint::
@@ -24,7 +24,7 @@ Utilities
 ---------
 
 
-.. automethod:: can.detect_available_configs
+.. automethod:: pycan.detect_available_configs
 
 
 .. _notifier:
@@ -34,10 +34,10 @@ Notifier
 
 The Notifier object is used as a message distributor for a bus.
 
-.. autoclass:: can.Notifier
+.. autoclass:: pycan.Notifier
     :members:
 
 Errors
 ------
 
-.. autoclass:: can.CanError
+.. autoclass:: pycan.CanError

@@ -1,13 +1,11 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
 See :mod:`can.logger`.
 """
 
 from __future__ import absolute_import
 
-from can.logger import main
+from pycan.logger import main
 
 
 if __name__ == "__main__":

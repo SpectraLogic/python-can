@@ -26,7 +26,7 @@ Supported devices
 Bus
 ---
 
-.. autoclass:: can.interfaces.slcan.slcanBus
+.. autoclass:: pycan.interfaces.slcan.slcanBus
     :members:
 
 

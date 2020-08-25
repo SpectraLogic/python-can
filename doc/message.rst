@@ -1,14 +1,14 @@
 Message
 =======
 
-.. module:: can
+.. module:: pycan
 
 .. autoclass:: Message
 
-    One can instantiate a :class:`~can.Message` defining data, and optional
+    One can instantiate a :class:`~pycan.Message` defining data, and optional
     arguments for all attributes such as arbitration ID, flags, and timestamp.
 
-        >>> from can import Message
+        >>> from pycan import Message
         >>> test = Message(data=[1, 2, 3, 4, 5])
         >>> test.data
         bytearray(b'\x01\x02\x03\x04\x05')
@@ -18,10 +18,10 @@ Message
         Timestamp:        0.000000    ID: 00000000    010    DLC: 5    01 02 03 04 05
 
 
-    The :attr:`~can.Message.arbitration_id` field in a CAN message may be either
+    The :attr:`~pycan.Message.arbitration_id` field in a CAN message may be either
     11 bits (standard addressing, CAN 2.0A) or 29 bits (extended addressing, CAN
-    2.0B) in length, and ``python-can`` exposes this difference with the
-    :attr:`~can.Message.is_extended_id` attribute.
+    2.0B) in length, and ``pythoncan`` exposes this difference with the
+    :attr:`~pycan.Message.is_extended_id` attribute.
 
     .. attribute:: timestamp
 
@@ -58,7 +58,7 @@ Message
             >>> print(Message(data=example_data))
             Timestamp:        0.000000    ID: 00000000    X        DLC: 3    01 02 03
 
-        A :class:`~can.Message` can also be created with bytes, or lists of ints:
+        A :class:`~pycan.Message` can also be created with bytes, or lists of ints:
 
             >>> m1 = Message(data=[0x64, 0x65, 0x61, 0x64, 0x62, 0x65, 0x65, 0x66])
             >>> print(m1.data)
@@ -102,7 +102,7 @@ Message
 
         :type: bool
 
-        This flag controls the size of the :attr:`~can.Message.arbitration_id` field.
+        This flag controls the size of the :attr:`~pycan.Message.arbitration_id` field.
         Previously this was exposed as `id_type`.
 
         >>> print(Message(is_extended_id=False))
@@ -164,7 +164,7 @@ Message
 
         A string representation of a CAN message:
 
-            >>> from can import Message
+            >>> from pycan import Message
             >>> test = Message()
             >>> print(test)
             Timestamp:        0.000000    ID: 00000000    X        DLC: 0
@@ -183,9 +183,9 @@ Message
 
         The flags field is represented as one, two or three letters:
 
-        - X if the :attr:`~can.Message.is_extended_id` attribute is set, otherwise S,
-        - E if the :attr:`~can.Message.is_error_frame` attribute is set,
-        - R if the :attr:`~can.Message.is_remote_frame` attribute is set.
+        - X if the :attr:`~pycan.Message.is_extended_id` attribute is set, otherwise S,
+        - E if the :attr:`~pycan.Message.is_error_frame` attribute is set,
+        - R if the :attr:`~pycan.Message.is_remote_frame` attribute is set.
 
         The arbitration ID field is represented as either a four or eight digit
         hexadecimal number depending on the length of the arbitration ID

@@ -1,9 +1,7 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
-This module tests :meth:`can.BusABC._detect_available_configs` and
-:meth:`can.BusABC.detect_available_configs`.
+This module tests :meth:`pycan.BusABC._detect_available_configs` and
+:meth:`pycan.BusABC.detect_available_configs`.
 """
 
 from __future__ import absolute_import
@@ -13,9 +11,9 @@ import unittest
 if sys.version_info.major > 2:
     basestring = str
 
-from can import detect_available_configs
+from pycan import detect_available_configs
 
-from .config import IS_LINUX, IS_CI, TEST_INTERFACE_SOCKETCAN
+from .config import TEST_INTERFACE_SOCKETCAN
 
 
 class TestDetectAvailableConfigs(unittest.TestCase):

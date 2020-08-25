@@ -1,8 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 """
-python-can requires the setuptools package to be installed.
+pythoncan requires the setuptools package to be installed
 """
 
 from __future__ import absolute_import
@@ -16,7 +13,7 @@ from setuptools import setup, find_packages
 
 logging.basicConfig(level=logging.WARNING)
 
-with open('can/__init__.py', 'r') as fd:
+with open('pycan/__init__.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 
@@ -57,7 +54,7 @@ pytest_runner = ["pytest-runner"] if needs_pytest else []
 setup(
     # Description
     name="pythoncan",
-    url="https://github.com/hardbyte/python-can",
+    url="https://github.com/SpectraLogic/python-can",
     description="Controller Area Network interface module for Python",
     long_description=long_description,
     classifiers=[

@@ -3,7 +3,7 @@
 Broadcast Manager
 =================
 
-.. module:: can.broadcastmanager
+.. module:: pycan.broadcastmanager
 
 The broadcast manager allows the user to setup periodic message jobs.
 For example sending a particular message at a given period. The broadcast
@@ -22,13 +22,13 @@ Message Sending Tasks
 
 The class based api for the broadcast manager uses a series of
 `mixin classes <https://www.ianlewis.org/en/mixins-and-python>`_.
-All mixins inherit from :class:`~can.broadcastmanager.CyclicSendTaskABC`
-which inherits from :class:`~can.broadcastmanager.CyclicTask`.
+All mixins inherit from :class:`~pycan.broadcastmanager.CyclicSendTaskABC`
+which inherits from :class:`~pycan.broadcastmanager.CyclicTask`.
 
-.. autoclass:: can.broadcastmanager.CyclicTask
+.. autoclass:: pycan.broadcastmanager.CyclicTask
     :members:
 
-.. autoclass:: can.broadcastmanager.CyclicSendTaskABC
+.. autoclass:: pycan.broadcastmanager.CyclicSendTaskABC
     :members:
 
 .. autoclass:: LimitedDurationCyclicSendTaskABC
@@ -37,10 +37,10 @@ which inherits from :class:`~can.broadcastmanager.CyclicTask`.
 .. autoclass:: MultiRateCyclicSendTaskABC
     :members:
 
-.. autoclass:: can.ModifiableCyclicTaskABC
+.. autoclass:: pycan.ModifiableCyclicTaskABC
     :members:
 
-.. autoclass:: can.RestartableCyclicTaskABC
+.. autoclass:: pycan.RestartableCyclicTaskABC
     :members:
 
 
@@ -48,8 +48,8 @@ Functional API
 --------------
 
 .. warning::
-    The functional API in :func:`can.broadcastmanager.send_periodic` is now deprecated
+    The functional API in :func:`pycan.broadcastmanager.send_periodic` is now deprecated
     and will be removed in version 4.0.
-    Use the object oriented API via :meth:`can.BusABC.send_periodic` instead.
+    Use the object oriented API via :meth:`pycan.BusABC.send_periodic` instead.
 
-.. autofunction:: can.broadcastmanager.send_periodic
+.. autofunction:: pycan.broadcastmanager.send_periodic

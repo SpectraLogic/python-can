@@ -9,7 +9,7 @@ Linux).
 Bus
 ---
 
-.. autoclass:: can.interfaces.kvaser.canlib.KvaserBus
+.. autoclass:: pycan.interfaces.kvaser.canlib.KvaserBus
     :members:
     :exclude-members: get_stats
 
@@ -17,7 +17,7 @@ Bus
 Internals
 ---------
 
-The Kvaser :class:`~can.Bus` object with a physical CAN Bus can be operated in two
+The Kvaser :class:`~pycan.Bus` object with a physical CAN Bus can be operated in two
 modes; ``single_handle`` mode with one shared bus handle used for both reading and
 writing to the CAN bus, or with two separate bus handles.
 Two separate handles are needed if receiving and sending messages are done in

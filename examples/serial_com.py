@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
-This example sends every second a messages over the serial interface and also 
+This example sends every second a messages over the serial interface and also
 receives incoming messages.
 
 python3 -m examples.serial_com
@@ -24,7 +22,7 @@ from __future__ import print_function
 import time
 import threading
 
-import can
+import pycan
 
 
 def send_cyclic(bus, msg, stop_event):
@@ -47,11 +45,11 @@ def receive(bus, stop_event):
     print("Stopped receiving messages")
 
 if __name__ == "__main__":
-    server = can.interface.Bus(bustype='serial', channel='/dev/ttyS10')
-    client = can.interface.Bus(bustype='serial', channel='/dev/ttyS11')
+    server = pycan.interface.Bus(bustype='serial', channel='/dev/ttyS10')
+    client = pycan.interface.Bus(bustype='serial', channel='/dev/ttyS11')
 
-    tx_msg = can.Message(arbitration_id=0x01, data=[0x11, 0x22, 0x33, 0x44,
-                                                    0x55, 0x66, 0x77, 0x88])
+    tx_msg = pycan.Message(arbitration_id=0x01, data=[0x11, 0x22, 0x33, 0x44,
+                                                      0x55, 0x66, 0x77, 0x88])
 
     # Thread for sending and receiving messages
     stop_event = threading.Event()

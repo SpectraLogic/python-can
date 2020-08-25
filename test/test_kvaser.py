@@ -1,23 +1,17 @@
 #!/usr/bin/env python
-# coding: utf-8
 
-"""
-"""
-
-import ctypes
 import time
-import logging
 import unittest
 try:
-    from unittest.mock import Mock, patch
+    from unittest.mock import Mock
 except ImportError:
-    from mock import patch, Mock
+    from mock import Mock
 
 import pytest
 
-import can
-from can.interfaces.kvaser import canlib
-from can.interfaces.kvaser import constants
+import pycan
+from pycan.interfaces.kvaser import canlib
+from pycan.interfaces.kvaser import constants
 
 
 class KvaserTest(unittest.TestCase):
@@ -43,7 +37,7 @@ class KvaserTest(unittest.TestCase):
 
         self.msg = {}
         self.msg_in_cue = None
-        self.bus = can.Bus(channel=0, bustype='kvaser')
+        self.bus = pycan.Bus(channel=0, bustype='kvaser')
 
     def tearDown(self):
         if self.bus:
@@ -100,7 +94,7 @@ class KvaserTest(unittest.TestCase):
                          expected_args)
 
     def test_send_extended(self):
-        msg = can.Message(
+        msg = pycan.Message(
             arbitration_id=0xc0ffee,
             data=[0, 25, 0, 1, 3, 1, 4],
             is_extended_id=True)
@@ -113,7 +107,7 @@ class KvaserTest(unittest.TestCase):
         self.assertSequenceEqual(self.msg['data'], [0, 25, 0, 1, 3, 1, 4])
 
     def test_send_standard(self):
-        msg = can.Message(
+        msg = pycan.Message(
             arbitration_id=0x321,
             data=[50, 51],
             is_extended_id=False)
@@ -130,7 +124,7 @@ class KvaserTest(unittest.TestCase):
         self.assertEqual(self.bus.recv(timeout=0.5), None)
 
     def test_recv_extended(self):
-        self.msg_in_cue = can.Message(
+        self.msg_in_cue = pycan.Message(
             arbitration_id=0xc0ffef,
             data=[1, 2, 3, 4, 5, 6, 7, 8],
             is_extended_id=True)
@@ -144,7 +138,7 @@ class KvaserTest(unittest.TestCase):
         self.assertTrue(now - 1 < msg.timestamp < now + 1)
 
     def test_recv_standard(self):
-        self.msg_in_cue = can.Message(
+        self.msg_in_cue = pycan.Message(
             arbitration_id=0x123,
             data=[100, 101],
             is_extended_id=False)
@@ -154,7 +148,7 @@ class KvaserTest(unittest.TestCase):
         self.assertEqual(msg.dlc, 2)
         self.assertEqual(msg.is_extended_id, False)
         self.assertSequenceEqual(msg.data, [100, 101])
-    
+
     def test_available_configs(self):
         configs = canlib.KvaserBus._detect_available_configs()
         expected = [
@@ -166,7 +160,7 @@ class KvaserTest(unittest.TestCase):
     def test_canfd_default_data_bitrate(self):
         canlib.canSetBusParams.reset_mock()
         canlib.canSetBusParamsFd.reset_mock()
-        can.Bus(channel=0, bustype='kvaser', fd=True)
+        pycan.Bus(channel=0, bustype='kvaser', fd=True)
         canlib.canSetBusParams.assert_called_once_with(
             0, constants.canFD_BITRATE_500K_80P, 0, 0, 0, 0, 0)
         canlib.canSetBusParamsFd.assert_called_once_with(
@@ -176,7 +170,7 @@ class KvaserTest(unittest.TestCase):
         canlib.canSetBusParams.reset_mock()
         canlib.canSetBusParamsFd.reset_mock()
         data_bitrate = 2000000
-        can.Bus(channel=0, bustype='kvaser', fd=True, data_bitrate=data_bitrate)
+        pycan.Bus(channel=0, bustype='kvaser', fd=True, data_bitrate=data_bitrate)
         bitrate_constant = canlib.BITRATE_FD[data_bitrate]
         canlib.canSetBusParams.assert_called_once_with(
             0, constants.canFD_BITRATE_500K_80P, 0, 0, 0, 0, 0)
@@ -187,7 +181,7 @@ class KvaserTest(unittest.TestCase):
         canlib.canSetBusParams.reset_mock()
         canlib.canSetBusParamsFd.reset_mock()
         data_bitrate = 123456
-        can.Bus(channel=0, bustype='kvaser', fd=True, data_bitrate=data_bitrate)
+        pycan.Bus(channel=0, bustype='kvaser', fd=True, data_bitrate=data_bitrate)
         canlib.canSetBusParams.assert_called_once_with(
             0, constants.canFD_BITRATE_500K_80P, 0, 0, 0, 0, 0)
         canlib.canSetBusParamsFd.assert_called_once_with(

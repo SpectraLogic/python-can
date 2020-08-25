@@ -21,12 +21,12 @@ Here is an example configuration file for using `PCAN-USB <https://www.peak-syst
     [default]
     interface = pcan
     channel = PCAN_USBBUS1
-    state = can.bus.BusState.PASSIVE
+    state = pycan.bus.BusState.PASSIVE
     bitrate = 500000
 
 ``channel``: (default PCAN_USBBUS1) CAN interface name
 
-``state``: (default can.bus.BusState.ACTIVE) BusState of the channel
+``state``: (default pycan.bus.BusState.ACTIVE) BusState of the channel
 
 ``bitrate``: (default 500000) Channel bitrate
 
@@ -51,4 +51,4 @@ Kernels >= 3.4 supports the PCAN adapters natively via :doc:`/interfaces/socketc
 Bus
 ---
 
-.. autoclass:: can.interfaces.pcan.PcanBus
+.. autoclass:: pycan.interfaces.pcan.PcanBus

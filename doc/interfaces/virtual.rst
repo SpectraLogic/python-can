@@ -11,12 +11,12 @@ others messages.
 
 .. code-block:: python
     
-    import can
+    import pycan
 
-    bus1 = can.interface.Bus('test', bustype='virtual')
-    bus2 = can.interface.Bus('test', bustype='virtual')
+    bus1 = pycan.interface.Bus('test', bustype='virtual')
+    bus2 = pycan.interface.Bus('test', bustype='virtual')
 
-    msg1 = can.Message(arbitration_id=0xabcde, data=[1,2,3])
+    msg1 = pycan.Message(arbitration_id=0xabcde, data=[1,2,3])
     bus1.send(msg1)
     msg2 = bus2.recv()
 

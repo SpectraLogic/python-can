@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
 This module tests cyclic send tasks.
 """
@@ -11,7 +9,7 @@ from time import sleep
 import unittest
 import gc
 
-import can
+import pycan
 
 from .config import *
 from .message_helper import ComparingMessagesTestCase
@@ -25,16 +23,16 @@ class SimpleCyclicSendTaskTest(unittest.TestCase, ComparingMessagesTestCase):
 
     @unittest.skipIf(IS_CI, "the timing sensitive behaviour cannot be reproduced reliably on a CI server")
     def test_cycle_time(self):
-        msg = can.Message(is_extended_id=False, arbitration_id=0x123, data=[0, 1, 2, 3, 4, 5, 6, 7])
+        msg = pycan.Message(is_extended_id=False, arbitration_id=0x123, data=[0, 1, 2, 3, 4, 5, 6, 7])
 
-        with can.interface.Bus(bustype='virtual') as bus1:
-            with can.interface.Bus(bustype='virtual') as bus2:
+        with pycan.interface.Bus(bustype='virtual') as bus1:
+            with pycan.interface.Bus(bustype='virtual') as bus2:
 
                 # disabling the garbage collector makes the time readings more reliable
                 gc.disable()
 
                 task = bus1.send_periodic(msg, 0.01, 1)
-                self.assertIsInstance(task, can.broadcastmanager.CyclicSendTaskABC)
+                self.assertIsInstance(task, pycan.broadcastmanager.CyclicSendTaskABC)
 
                 sleep(2)
                 size = bus2.queue.qsize()
@@ -59,14 +57,14 @@ class SimpleCyclicSendTaskTest(unittest.TestCase, ComparingMessagesTestCase):
                 self.assertMessageEqual(msg, last_msg)
 
     def test_removing_bus_tasks(self):
-        bus = can.interface.Bus(bustype='virtual')
+        bus = pycan.interface.Bus(bustype='virtual')
         tasks = []
         for task_i in range(10):
-            msg = can.Message(is_extended_id=False, arbitration_id=0x123, data=[0, 1, 2, 3, 4, 5, 6, 7])
+            msg = pycan.Message(is_extended_id=False, arbitration_id=0x123, data=[0, 1, 2, 3, 4, 5, 6, 7])
             msg.arbitration_id = task_i
             task = bus.send_periodic(msg, 0.1, 1)
             tasks.append(task)
-            self.assertIsInstance(task, can.broadcastmanager.CyclicSendTaskABC)
+            self.assertIsInstance(task, pycan.broadcastmanager.CyclicSendTaskABC)
 
         assert len(bus._periodic_tasks) == 10
 
@@ -78,14 +76,14 @@ class SimpleCyclicSendTaskTest(unittest.TestCase, ComparingMessagesTestCase):
         bus.shutdown()
 
     def test_managed_tasks(self):
-        bus = can.interface.Bus(bustype='virtual', receive_own_messages=True)
+        bus = pycan.interface.Bus(bustype='virtual', receive_own_messages=True)
         tasks = []
         for task_i in range(3):
-            msg = can.Message(is_extended_id=False, arbitration_id=0x123, data=[0, 1, 2, 3, 4, 5, 6, 7])
+            msg = pycan.Message(is_extended_id=False, arbitration_id=0x123, data=[0, 1, 2, 3, 4, 5, 6, 7])
             msg.arbitration_id = task_i
             task = bus.send_periodic(msg, 0.1, 10, store_task=False)
             tasks.append(task)
-            self.assertIsInstance(task, can.broadcastmanager.CyclicSendTaskABC)
+            self.assertIsInstance(task, pycan.broadcastmanager.CyclicSendTaskABC)
 
         assert len(bus._periodic_tasks) == 0
 
@@ -104,10 +102,10 @@ class SimpleCyclicSendTaskTest(unittest.TestCase, ComparingMessagesTestCase):
         bus.shutdown()
 
     def test_stopping_perodic_tasks(self):
-        bus = can.interface.Bus(bustype='virtual')
+        bus = pycan.interface.Bus(bustype='virtual')
         tasks = []
         for task_i in range(10):
-            msg = can.Message(is_extended_id=False, arbitration_id=0x123, data=[0, 1, 2, 3, 4, 5, 6, 7])
+            msg = pycan.Message(is_extended_id=False, arbitration_id=0x123, data=[0, 1, 2, 3, 4, 5, 6, 7])
             msg.arbitration_id = task_i
             task = bus.send_periodic(msg, 0.1, 1)
             tasks.append(task)

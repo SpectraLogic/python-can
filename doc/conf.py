@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# python-can documentation build configuration file
+# pythoncan documentation build configuration file
 #
 # This file is execfile()d with the current directory set to its containing dir.
 
@@ -10,21 +10,21 @@ import sys
 import os
 
 # General information about the project.
-project = u'python-can'
+project = u'pythoncan'
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
 
-import can
+import pycan
 # The version info for the project, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = can.__version__.split('-')[0]
-release = can.__version__
+version = pycan.__version__.split('-')[0]
+release = pycan.__version__
 
 # -- General configuration -----------------------------------------------------
 
@@ -187,4 +187,4 @@ html_theme = 'default'
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'python-can'
+htmlhelp_basename = 'pythoncan'

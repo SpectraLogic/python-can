@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
 This demo creates multiple processes of producers to spam a socketcan bus.
 """
@@ -8,7 +6,7 @@ This demo creates multiple processes of producers to spam a socketcan bus.
 from time import sleep
 from concurrent.futures import ProcessPoolExecutor
 
-import can
+import pycan
 
 
 def producer(id, message_count=16):
@@ -17,9 +15,9 @@ def producer(id, message_count=16):
     :param int id: the id of the thread/process
     """
 
-    with can.Bus(bustype='socketcan', channel='vcan0') as bus:
+    with pycan.Bus(bustype='socketcan', channel='vcan0') as bus:
         for i in range(message_count):
-            msg = can.Message(arbitration_id=0x0cf02200+id, data=[id, i, 0, 1, 3, 1, 4, 1])
+            msg = pycan.Message(arbitration_id=0x0cf02200+id, data=[id, i, 0, 1, 3, 1, 4, 1])
             bus.send(msg)
         sleep(1.0)
 

@@ -1,7 +1,7 @@
 CAN Interface Modules
 ---------------------
 
-**python-can** hides the low-level, device-specific interfaces to controller
+**pythoncan** hides the low-level, device-specific interfaces to controller
 area network adapters in interface dependant modules. However as each hardware
 device is different, you should carefully go through your interface's
 documentation.
@@ -27,15 +27,15 @@ The available interfaces are:
    interfaces/systec
 
 Additional interfaces can be added via a plugin interface. An external package
-can register a new interface by using the ``can.interface`` entry point in its setup.py.
+can register a new interface by using the ``pycan.interface`` entry point in its setup.py.
 
 The format of the entry point is ``interface_name=module:classname`` where
-``classname`` is a concrete :class:`can.BusABC` implementation.
+``classname`` is a concrete :class:`pycan.BusABC` implementation.
 
 ::
 
  entry_points={
-     'can.interface': [
+     'pycan.interface': [
          "interface_name=module:classname",
      ]
  },

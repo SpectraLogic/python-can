@@ -8,7 +8,7 @@ Interface to `IXXAT <http://www.ixxat.com/>`__ Virtual CAN Interface V3 SDK. Wor
 The Linux ECI SDK is currently unsupported, however on Linux some devices are
 supported with :doc:`socketcan`.
 
-The :meth:`~can.interfaces.ixxat.canlib.IXXATBus.send_periodic` method is supported
+The :meth:`~pycan.interfaces.ixxat.canlib.IXXATBus.send_periodic` method is supported
 natively through the on-board cyclic transmit list.
 Modifying cyclic messages is not possible. You will need to stop it, and then
 start a new periodic message.
@@ -17,10 +17,10 @@ start a new periodic message.
 Bus
 ---
 
-.. autoclass:: can.interfaces.ixxat.IXXATBus
+.. autoclass:: pycan.interfaces.ixxat.IXXATBus
     :members:
 
-.. autoclass:: can.interfaces.ixxat.canlib.CyclicSendTask
+.. autoclass:: pycan.interfaces.ixxat.canlib.CyclicSendTask
     :members:
 
 
@@ -33,7 +33,7 @@ The simplest configuration file would be::
     channel = 0
 
 Python-can will search for the first IXXAT device available and open the first channel.
-``interface`` and ``channel`` parameters are interpreted by frontend ``can.interfaces.interface``
+``interface`` and ``channel`` parameters are interpreted by frontend ``pycan.interfaces.interface``
 module, while the following parameters are optional and are interpreted by IXXAT implementation.
 
 * ``bitrate`` (default 500000) Channel bitrate
@@ -46,7 +46,7 @@ module, while the following parameters are optional and are interpreted by IXXAT
 Internals
 ---------
 
-The IXXAT :class:`~can.BusABC` object is a fairly straightforward interface
+The IXXAT :class:`~pycan.BusABC` object is a fairly straightforward interface
 to the IXXAT VCI library. It can open a specific device ID or use the
 first one found.
 

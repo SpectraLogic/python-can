@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
 This example exercises the periodic sending capabilities.
 
@@ -15,7 +13,7 @@ from __future__ import print_function
 import logging
 import time
 
-import can
+import pycan
 
 logging.basicConfig(level=logging.INFO)
 
@@ -26,9 +24,9 @@ def simple_periodic_send(bus):
     Sleeps for 2 seconds then stops the task.
     """
     print("Starting to send a message every 200ms for 2s")
-    msg = can.Message(arbitration_id=0x123, data=[1, 2, 3, 4, 5, 6], is_extended_id=False)
+    msg = pycan.Message(arbitration_id=0x123, data=[1, 2, 3, 4, 5, 6], is_extended_id=False)
     task = bus.send_periodic(msg, 0.20)
-    assert isinstance(task, can.CyclicSendTaskABC)
+    assert isinstance(task, pycan.CyclicSendTaskABC)
     time.sleep(2)
     task.stop()
     print("stopped cyclic send")
@@ -36,9 +34,9 @@ def simple_periodic_send(bus):
 
 def limited_periodic_send(bus):
     print("Starting to send a message every 200ms for 1s")
-    msg = can.Message(arbitration_id=0x12345678, data=[0, 0, 0, 0, 0, 0], is_extended_id=True)
+    msg = pycan.Message(arbitration_id=0x12345678, data=[0, 0, 0, 0, 0, 0], is_extended_id=True)
     task = bus.send_periodic(msg, 0.20, 1, store_task=False)
-    if not isinstance(task, can.LimitedDurationCyclicSendTaskABC):
+    if not isinstance(task, pycan.LimitedDurationCyclicSendTaskABC):
         print("This interface doesn't seem to support a ")
         task.stop()
         return
@@ -53,9 +51,9 @@ def limited_periodic_send(bus):
 
 def test_periodic_send_with_modifying_data(bus):
     print("Starting to send a message every 200ms. Initial data is ones")
-    msg = can.Message(arbitration_id=0x0cf02200, data=[1, 1, 1, 1])
+    msg = pycan.Message(arbitration_id=0x0cf02200, data=[1, 1, 1, 1])
     task = bus.send_periodic(msg, 0.20)
-    if not isinstance(task, can.ModifiableCyclicTaskABC):
+    if not isinstance(task, pycan.ModifiableCyclicTaskABC):
         print("This interface doesn't seem to support modification")
         task.stop()
         return
@@ -107,15 +105,15 @@ def test_periodic_send_with_modifying_data(bus):
 
 if __name__ == "__main__":
 
-    reset_msg = can.Message(arbitration_id=0x00, data=[0, 0, 0, 0, 0, 0], is_extended_id=False)
+    reset_msg = pycan.Message(arbitration_id=0x00, data=[0, 0, 0, 0, 0, 0], is_extended_id=False)
 
     for interface, channel in [
-        ('socketcan', 'vcan0'),
-        #('ixxat', 0)
+            ('socketcan', 'vcan0'),
+            #('ixxat', 0)
     ]:
         print("Carrying out cyclic tests with {} interface".format(interface))
 
-        bus = can.Bus(interface=interface, channel=channel, bitrate=500000)
+        bus = pycan.Bus(interface=interface, channel=channel, bitrate=500000)
         bus.send(reset_msg)
 
         simple_periodic_send(bus)

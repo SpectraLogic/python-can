@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
-This module tests :class:`can.MessageSync`.
+This module tests :class:`pycan.MessageSync`.
 """
 
 from __future__ import absolute_import
@@ -14,7 +12,7 @@ import gc
 import unittest
 import pytest
 
-from can import MessageSync, Message
+from pycan import MessageSync, Message
 
 from .config import IS_CI, IS_APPVEYOR, IS_TRAVIS, IS_OSX
 from .message_helper import ComparingMessagesTestCase

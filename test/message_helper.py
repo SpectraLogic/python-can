@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
-This module contains a helper for writing test cases that need to compare messages.
+This module contains a helper for writing test cases that need to compare messages
 """
 
 from __future__ import absolute_import, print_function
@@ -20,7 +18,7 @@ class ComparingMessagesTestCase(object):
 
     def __init__(self, allowed_timestamp_delta=0.0, preserves_channel=True):
         """
-        :param float or int or None allowed_timestamp_delta: directly passed to :meth:`can.Message.equals`
+        :param float or int or None allowed_timestamp_delta: directly passed to :meth:`pycan.Message.equals`
         :param bool preserves_channel: if True, checks that the channel attribute is preserved
         """
         self.allowed_timestamp_delta = allowed_timestamp_delta

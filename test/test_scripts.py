@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
 This module tests that the scripts are all callable.
 """
@@ -72,7 +70,7 @@ class TestLoggerScript(CanScriptTest):
 
     def _commands(self):
         commands = [
-            "python -m can.logger --help",
+            "python -m pycan.logger --help",
             "python scripts/can_logger.py --help"
         ]
         if IS_UNIX:
@@ -80,7 +78,7 @@ class TestLoggerScript(CanScriptTest):
         return commands
 
     def _import(self):
-        import can.logger as module
+        import pycan.logger as module
         return module
 
 
@@ -88,7 +86,7 @@ class TestPlayerScript(CanScriptTest):
 
     def _commands(self):
         commands = [
-            "python -m can.player --help",
+            "python -m pycan.player --help",
             "python scripts/can_player.py --help"
         ]
         if IS_UNIX:
@@ -96,7 +94,7 @@ class TestPlayerScript(CanScriptTest):
         return commands
 
     def _import(self):
-        import can.player as module
+        import pycan.player as module
         return module
 
 

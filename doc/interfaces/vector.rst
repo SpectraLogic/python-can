@@ -26,9 +26,9 @@ slow and CPU intensive polling will be used when waiting for new messages.
 Bus
 ---
 
-.. autoclass:: can.interfaces.vector.VectorBus
+.. autoclass:: pycan.interfaces.vector.VectorBus
 
-.. autoexception:: can.interfaces.vector.VectorError
+.. autoexception:: pycan.interfaces.vector.VectorError
 
 
 .. _Vector: https://vector.com/

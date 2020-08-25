@@ -1,26 +1,26 @@
 Scripts
 =======
 
-The following modules are callable from python-can.
+The following modules are callable from pythoncan.
 
-They can be called for example by ``python -m can.logger`` or ``can_logger.py`` (if installed using pip).
+They can be called for example by ``python -m pycan.logger`` or ``can_logger.py`` (if installed using pip).
 
-can.logger
+pycan.logger
 ----------
 
 Command line help, called with ``--help``:
 
 
-.. command-output:: python -m can.logger -h
+.. command-output:: python -m pycan.logger -h
 
 
-can.player
+pycan.player
 ----------
 
-.. command-output:: python -m can.player -h
+.. command-output:: python -m pycan.player -h
 
 
-can.viewer
+pycan.viewer
 ----------
 
 A screenshot of the application can be seen below:
@@ -33,9 +33,9 @@ The first column is the number of times a frame with the particular ID that has 
 Command line arguments
 ^^^^^^^^^^^^^^^^^^^^^^
 
-By default the ``can.viewer`` uses the :doc:`/interfaces/socketcan` interface. All interfaces are supported and can be specified using the ``-i`` argument or configured following :doc:`/configuration`.
+By default the ``pycan.viewer`` uses the :doc:`/interfaces/socketcan` interface. All interfaces are supported and can be specified using the ``-i`` argument or configured following :doc:`/configuration`.
 
 The full usage page can be seen below:
 
-.. command-output:: python -m can.viewer -h
+.. command-output:: python -m pycan.viewer -h
 

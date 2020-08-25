@@ -1,13 +1,10 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
 This module tests two virtual buses attached to each other.
 """
 
 from __future__ import absolute_import, print_function
 
-import sys
 import unittest
 from time import sleep
 from multiprocessing.dummy import Pool as ThreadPool
@@ -15,7 +12,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 import pytest
 import random
 
-import can
+import pycan
 
 from .config import *
 
@@ -35,16 +32,16 @@ class Back2BackTestCase(unittest.TestCase):
     CHANNEL_2 = 'virtual_channel_0'
 
     def setUp(self):
-        self.bus1 = can.Bus(channel=self.CHANNEL_1,
-                            bustype=self.INTERFACE_1,
-                            bitrate=self.BITRATE,
-                            fd=TEST_CAN_FD,
-                            single_handle=True)
-        self.bus2 = can.Bus(channel=self.CHANNEL_2,
-                            bustype=self.INTERFACE_2,
-                            bitrate=self.BITRATE,
-                            fd=TEST_CAN_FD,
-                            single_handle=True)
+        self.bus1 = pycan.Bus(channel=self.CHANNEL_1,
+                              bustype=self.INTERFACE_1,
+                              bitrate=self.BITRATE,
+                              fd=TEST_CAN_FD,
+                              single_handle=True)
+        self.bus2 = pycan.Bus(channel=self.CHANNEL_2,
+                              bustype=self.INTERFACE_2,
+                              bitrate=self.BITRATE,
+                              fd=TEST_CAN_FD,
+                              single_handle=True)
 
     def tearDown(self):
         self.bus1.shutdown()
@@ -83,10 +80,10 @@ class Back2BackTestCase(unittest.TestCase):
 
     @unittest.skipIf(IS_CI, "the timing sensitive behaviour cannot be reproduced reliably on a CI server")
     def test_timestamp(self):
-        self.bus2.send(can.Message())
+        self.bus2.send(pycan.Message())
         recv_msg1 = self.bus1.recv(self.TIMEOUT)
         sleep(2.0)
-        self.bus2.send(can.Message())
+        self.bus2.send(pycan.Message())
         recv_msg2 = self.bus1.recv(self.TIMEOUT)
         delta_time = recv_msg2.timestamp - recv_msg1.timestamp
         self.assertTrue(1.75 <= delta_time <= 2.25,
@@ -94,45 +91,45 @@ class Back2BackTestCase(unittest.TestCase):
                         'But measured {}'.format(delta_time))
 
     def test_standard_message(self):
-        msg = can.Message(is_extended_id=False,
-                          arbitration_id=0x100,
-                          data=[1, 2, 3, 4, 5, 6, 7, 8])
+        msg = pycan.Message(is_extended_id=False,
+                            arbitration_id=0x100,
+                            data=[1, 2, 3, 4, 5, 6, 7, 8])
         self._send_and_receive(msg)
 
     def test_extended_message(self):
-        msg = can.Message(is_extended_id=True,
-                          arbitration_id=0x123456,
-                          data=[10, 11, 12, 13, 14, 15, 16, 17])
+        msg = pycan.Message(is_extended_id=True,
+                            arbitration_id=0x123456,
+                            data=[10, 11, 12, 13, 14, 15, 16, 17])
         self._send_and_receive(msg)
 
     def test_remote_message(self):
-        msg = can.Message(is_extended_id=False,
-                          arbitration_id=0x200,
-                          is_remote_frame=True,
-                          dlc=4)
+        msg = pycan.Message(is_extended_id=False,
+                            arbitration_id=0x200,
+                            is_remote_frame=True,
+                            dlc=4)
         self._send_and_receive(msg)
 
     def test_dlc_less_than_eight(self):
-        msg = can.Message(is_extended_id=False,
-                          arbitration_id=0x300,
-                          data=[4, 5, 6])
+        msg = pycan.Message(is_extended_id=False,
+                            arbitration_id=0x300,
+                            data=[4, 5, 6])
         self._send_and_receive(msg)
 
     @unittest.skipUnless(TEST_CAN_FD, "Don't test CAN-FD")
     def test_fd_message(self):
-        msg = can.Message(is_fd=True,
-                          is_extended_id=True,
-                          arbitration_id=0x56789,
-                          data=[0xff] * 64)
+        msg = pycan.Message(is_fd=True,
+                            is_extended_id=True,
+                            arbitration_id=0x56789,
+                            data=[0xff] * 64)
         self._send_and_receive(msg)
 
     @unittest.skipUnless(TEST_CAN_FD, "Don't test CAN-FD")
     def test_fd_message_with_brs(self):
-        msg = can.Message(is_fd=True,
-                          bitrate_switch=True,
-                          is_extended_id=True,
-                          arbitration_id=0x98765,
-                          data=[0xff] * 48)
+        msg = pycan.Message(is_fd=True,
+                            bitrate_switch=True,
+                            is_extended_id=True,
+                            arbitration_id=0x98765,
+                            data=[0xff] * 48)
         self._send_and_receive(msg)
 
 
@@ -149,20 +146,20 @@ class BasicTestSocketCan(Back2BackTestCase):
 class SocketCanBroadcastChannel(unittest.TestCase):
 
     def setUp(self):
-        self.broadcast_bus = can.Bus(channel='', bustype='socketcan')
-        self.regular_bus = can.Bus(channel='vcan0', bustype='socketcan')
+        self.broadcast_bus = pycan.Bus(channel='', bustype='socketcan')
+        self.regular_bus = pycan.Bus(channel='vcan0', bustype='socketcan')
 
     def tearDown(self):
         self.broadcast_bus.shutdown()
         self.regular_bus.shutdown()
 
     def test_broadcast_channel(self):
-        self.broadcast_bus.send(can.Message(channel='vcan0'))
+        self.broadcast_bus.send(pycan.Message(channel='vcan0'))
         recv_msg = self.regular_bus.recv(1)
         self.assertIsNotNone(recv_msg)
         self.assertEqual(recv_msg.channel, 'vcan0')
 
-        self.regular_bus.send(can.Message())
+        self.regular_bus.send(pycan.Message())
         recv_msg = self.broadcast_bus.recv(1)
         self.assertIsNotNone(recv_msg)
         self.assertEqual(recv_msg.channel, 'vcan0')
@@ -171,23 +168,23 @@ class SocketCanBroadcastChannel(unittest.TestCase):
 class TestThreadSafeBus(Back2BackTestCase):
 
     def setUp(self):
-        self.bus1 = can.ThreadSafeBus(channel=self.CHANNEL_1,
-                                      bustype=self.INTERFACE_1,
-                                      bitrate=self.BITRATE,
-                                      fd=TEST_CAN_FD,
-                                      single_handle=True)
-        self.bus2 = can.ThreadSafeBus(channel=self.CHANNEL_2,
-                                      bustype=self.INTERFACE_2,
-                                      bitrate=self.BITRATE,
-                                      fd=TEST_CAN_FD,
-                                      single_handle=True)
+        self.bus1 = pycan.ThreadSafeBus(channel=self.CHANNEL_1,
+                                        bustype=self.INTERFACE_1,
+                                        bitrate=self.BITRATE,
+                                        fd=TEST_CAN_FD,
+                                        single_handle=True)
+        self.bus2 = pycan.ThreadSafeBus(channel=self.CHANNEL_2,
+                                        bustype=self.INTERFACE_2,
+                                        bitrate=self.BITRATE,
+                                        fd=TEST_CAN_FD,
+                                        single_handle=True)
 
     @pytest.mark.timeout(5.0)
     def test_concurrent_writes(self):
         sender_pool = ThreadPool(100)
         receiver_pool = ThreadPool(100)
 
-        message = can.Message(
+        message = pycan.Message(
             arbitration_id=0x123,
             channel=self.CHANNEL_1,
             is_extended_id=True,
@@ -218,14 +215,14 @@ class TestThreadSafeBus(Back2BackTestCase):
         sender_pool = ThreadPool(100)
         receiver_pool = ThreadPool(100)
 
-        included_message = can.Message(
+        included_message = pycan.Message(
             arbitration_id=0x123,
             channel=self.CHANNEL_1,
             is_extended_id=True,
             timestamp=121334.365,
             data=[254, 255, 1, 2]
         )
-        excluded_message = can.Message(
+        excluded_message = pycan.Message(
             arbitration_id=0x02,
             channel=self.CHANNEL_1,
             is_extended_id=True,

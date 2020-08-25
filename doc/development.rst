@@ -13,7 +13,7 @@ mailing list for development discussion.
 
 Some more information about the internals of this library can be found
 in the chapter :ref:`internalapi`.
-There is also additional information on extending the ``can.io`` module.
+There is also additional information on extending the ``pycan.io`` module.
 
 
 
@@ -38,12 +38,12 @@ Creating a new interface/backend
 These steps are a guideline on how to add a new backend to python-can.
 
 - Create a module (either a ``*.py`` or an entire subdirectory depending
-  on the complexity) inside ``can.interfaces``
+  on the complexity) inside ``pycan.interfaces``
 - Implement the central part of the backend: the bus class that extends
-  :class:`can.BusABC`.
+  :class:`pycan.BusABC`.
   See :ref:`businternals` for more info on this one!
 - Register your backend bus class in ``can.interface.BACKENDS`` and
-  ``can.interfaces.VALID_INTERFACES`` in ``can.interfaces.__init__.py``.
+  ``can.interfaces.VALID_INTERFACES`` in ``pycan.interfaces.__init__.py``.
 - Add docs where appropriate. At a minimum add to ``doc/interfaces.rst`` and add
   a new interface specific document in ``doc/interface/*``.
 - Update ``doc/scripts.rst`` accordingly.

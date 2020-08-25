@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-# coding: utf-8
 import unittest
-import can
+import pycan
 
 
 class slcanTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.bus = can.Bus('loop://', bustype='slcan', sleep_after_open=0)
+        self.bus = pycan.Bus('loop://', bustype='slcan', sleep_after_open=0)
         self.serial = self.bus.serialPortOrig
         self.serial.read(self.serial.in_waiting)
 
@@ -25,9 +24,9 @@ class slcanTestCase(unittest.TestCase):
         self.assertSequenceEqual(msg.data, [0xAA, 0x55])
 
     def test_send_extended(self):
-        msg = can.Message(arbitration_id=0x12ABCDEF,
-                          is_extended_id=True,
-                          data=[0xAA, 0x55])
+        msg = pycan.Message(arbitration_id=0x12ABCDEF,
+                            is_extended_id=True,
+                            data=[0xAA, 0x55])
         self.bus.send(msg)
         data = self.serial.read(self.serial.in_waiting)
         self.assertEqual(data, b'T12ABCDEF2AA55\r')
@@ -43,9 +42,9 @@ class slcanTestCase(unittest.TestCase):
         self.assertSequenceEqual(msg.data, [0x11, 0x22, 0x33])
 
     def test_send_standard(self):
-        msg = can.Message(arbitration_id=0x456,
-                          is_extended_id=False,
-                          data=[0x11, 0x22, 0x33])
+        msg = pycan.Message(arbitration_id=0x456,
+                            is_extended_id=False,
+                            data=[0x11, 0x22, 0x33])
         self.bus.send(msg)
         data = self.serial.read(self.serial.in_waiting)
         self.assertEqual(data, b't4563112233\r')
@@ -60,10 +59,10 @@ class slcanTestCase(unittest.TestCase):
         self.assertEqual(msg.dlc, 8)
 
     def test_send_standard_remote(self):
-        msg = can.Message(arbitration_id=0x123,
-                          is_extended_id=False,
-                          is_remote_frame=True,
-                          dlc=8)
+        msg = pycan.Message(arbitration_id=0x123,
+                            is_extended_id=False,
+                            is_remote_frame=True,
+                            dlc=8)
         self.bus.send(msg)
         data = self.serial.read(self.serial.in_waiting)
         self.assertEqual(data, b'r1238\r')
@@ -78,10 +77,10 @@ class slcanTestCase(unittest.TestCase):
         self.assertEqual(msg.dlc, 6)
 
     def test_send_extended_remote(self):
-        msg = can.Message(arbitration_id=0x12ABCDEF,
-                          is_extended_id=True,
-                          is_remote_frame=True,
-                          dlc=6)
+        msg = pycan.Message(arbitration_id=0x12ABCDEF,
+                            is_extended_id=True,
+                            is_remote_frame=True,
+                            dlc=6)
         self.bus.send(msg)
         data = self.serial.read(self.serial.in_waiting)
         self.assertEqual(data, b'R12ABCDEF6\r')

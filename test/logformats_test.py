@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-# coding: utf-8
-
 """
-This test module test the separate reader/writer combinations of the can.io.*
+This test module test the separate reader/writer combinations of the pycan.io.*
 modules by writing some messages to a temporary file and reading it again.
 Then it checks if the messages that were read are same ones as the
 ones that were written. It also checks that the order of the messages
@@ -29,7 +27,7 @@ except ImportError:
     # Python 2
     from itertools import izip_longest as zip_longest
 
-import can
+import pycan
 
 from .data.example_data import TEST_MESSAGES_BASE, TEST_MESSAGES_REMOTE_FRAMES, \
                                TEST_MESSAGES_ERROR_FRAMES, TEST_COMMENTS, \
@@ -81,7 +79,7 @@ class ReaderWriterTest(unittest.TestCase, ComparingMessagesTestCase):
                                     but deterministically, which makes the test reproducible.
         :param bool test_append: tests the writer in append mode as well
 
-        :param float or int or None allowed_timestamp_delta: directly passed to :meth:`can.Message.equals`
+        :param float or int or None allowed_timestamp_delta: directly passed to :meth:`pycan.Message.equals`
         :param bool preserves_channel: if True, checks that the channel attribute is preserved
         :param any adds_default_channel: sets this as the channel when not other channel was given
                                          ignored, if *preserves_channel* is True
@@ -175,7 +173,7 @@ class ReaderWriterTest(unittest.TestCase, ComparingMessagesTestCase):
         if hasattr(r.file, 'closed'):
             self.assertTrue(r.file.closed)
 
-        # check if at least the number of messages matches; 
+        # check if at least the number of messages matches;
         self.assertEqual(len(read_messages), len(self.original_messages),
             "the number of written messages does not match the number of read messages")
 
@@ -234,7 +232,7 @@ class ReaderWriterTest(unittest.TestCase, ComparingMessagesTestCase):
         if hasattr(my_file, 'closed'):
             self.assertTrue(my_file.closed)
 
-        # check if at least the number of messages matches; 
+        # check if at least the number of messages matches;
         self.assertEqual(len(read_messages), len(self.original_messages),
             "the number of written messages does not match the number of read messages")
 
@@ -310,11 +308,11 @@ class ReaderWriterTest(unittest.TestCase, ComparingMessagesTestCase):
 
 
 class TestAscFileFormat(ReaderWriterTest):
-    """Tests can.ASCWriter and can.ASCReader"""
+    """Tests pycan.ASCWriter and pycan.ASCReader"""
 
     def _setup_instance(self):
         super(TestAscFileFormat, self)._setup_instance_helper(
-            can.ASCWriter, can.ASCReader,
+            pycan.ASCWriter, pycan.ASCReader,
             check_fd=True,
             check_comments=True,
             preserves_channel=False, adds_default_channel=0
@@ -322,11 +320,11 @@ class TestAscFileFormat(ReaderWriterTest):
 
 
 class TestBlfFileFormat(ReaderWriterTest):
-    """Tests can.BLFWriter and can.BLFReader"""
+    """Tests pycan.BLFWriter and pycan.BLFReader"""
 
     def _setup_instance(self):
         super(TestBlfFileFormat, self)._setup_instance_helper(
-            can.BLFWriter, can.BLFReader,
+            pycan.BLFWriter, pycan.BLFReader,
             binary_file=True,
             check_fd=False,
             check_comments=False,
@@ -336,16 +334,16 @@ class TestBlfFileFormat(ReaderWriterTest):
 
     def test_read_known_file(self):
         logfile = os.path.join(os.path.dirname(__file__), "data", "logfile.blf")
-        with can.BLFReader(logfile) as reader:
+        with pycan.BLFReader(logfile) as reader:
             messages = list(reader)
 
         expected = [
-            can.Message(
+            pycan.Message(
                 timestamp=1.0,
                 is_extended_id=False,
                 arbitration_id=0x64,
                 data=[0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8]),
-            can.Message(
+            pycan.Message(
                 timestamp=73.0,
                 is_extended_id=True,
                 arbitration_id=0x1FFFFFFF,
@@ -356,11 +354,11 @@ class TestBlfFileFormat(ReaderWriterTest):
 
 
 class TestCanutilsFileFormat(ReaderWriterTest):
-    """Tests can.CanutilsLogWriter and can.CanutilsLogReader"""
+    """Tests pycan.CanutilsLogWriter and pycan.CanutilsLogReader"""
 
     def _setup_instance(self):
         super(TestCanutilsFileFormat, self)._setup_instance_helper(
-            can.CanutilsLogWriter, can.CanutilsLogReader,
+            pycan.CanutilsLogWriter, pycan.CanutilsLogReader,
             check_fd=False,
             test_append=True, check_comments=False,
             preserves_channel=False, adds_default_channel='vcan0'
@@ -368,11 +366,11 @@ class TestCanutilsFileFormat(ReaderWriterTest):
 
 
 class TestCsvFileFormat(ReaderWriterTest):
-    """Tests can.ASCWriter and can.ASCReader"""
+    """Tests pycan.ASCWriter and pycan.ASCReader"""
 
     def _setup_instance(self):
         super(TestCsvFileFormat, self)._setup_instance_helper(
-            can.CSVWriter, can.CSVReader,
+            pycan.CSVWriter, pycan.CSVReader,
             check_fd=False,
             test_append=True, check_comments=False,
             preserves_channel=False, adds_default_channel=None
@@ -380,11 +378,11 @@ class TestCsvFileFormat(ReaderWriterTest):
 
 
 class TestSqliteDatabaseFormat(ReaderWriterTest):
-    """Tests can.SqliteWriter and can.SqliteReader"""
+    """Tests pycan.SqliteWriter and pycan.SqliteReader"""
 
     def _setup_instance(self):
         super(TestSqliteDatabaseFormat, self)._setup_instance_helper(
-            can.SqliteWriter, can.SqliteReader,
+            pycan.SqliteWriter, pycan.SqliteReader,
             check_fd=False,
             test_append=True, check_comments=False,
             preserves_channel=False, adds_default_channel=None
@@ -400,7 +398,7 @@ class TestSqliteDatabaseFormat(ReaderWriterTest):
 
     def test_read_all(self):
         """
-        testing :meth:`can.SqliteReader.read_all` with context manager and path-like object
+        testing :meth:`pycan.SqliteReader.read_all` with context manager and path-like object
         """
         # create writer
         print("writing all messages/comments")
@@ -412,7 +410,7 @@ class TestSqliteDatabaseFormat(ReaderWriterTest):
         with self.reader_constructor(self.test_file_name) as reader:
             read_messages = list(reader.read_all())
 
-        # check if at least the number of messages matches; 
+        # check if at least the number of messages matches;
         self.assertEqual(len(read_messages), len(self.original_messages),
             "the number of written messages does not match the number of read messages")
 
@@ -420,19 +418,19 @@ class TestSqliteDatabaseFormat(ReaderWriterTest):
 
 
 class TestPrinter(unittest.TestCase):
-    """Tests that can.Printer does not crash"""
+    """Tests that pycan.Printer does not crash"""
 
     # TODO add CAN FD messages
     messages = TEST_MESSAGES_BASE + TEST_MESSAGES_REMOTE_FRAMES + TEST_MESSAGES_ERROR_FRAMES
 
     def test_not_crashes_with_stdout(self):
-        with can.Printer() as printer:
+        with pycan.Printer() as printer:
             for message in self.messages:
                 printer(message)
 
     def test_not_crashes_with_file(self):
         with tempfile.NamedTemporaryFile('w', delete=False) as temp_file:
-            with can.Printer(temp_file) as printer:
+            with pycan.Printer(temp_file) as printer:
                 for message in self.messages:
                     printer(message)
 
