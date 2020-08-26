@@ -201,7 +201,7 @@ class Message(object):
             args.append("is_error_frame={}".format(self.is_error_frame))
 
         if self.channel is not None:
-            args.append("channel={!r}".format(self.channel))                
+            args.append("channel={!r}".format(self.channel))
 
         data = ["{:#02x}".format(byte) for byte in self.data]
         args += ["dlc={}".format(self.dlc),

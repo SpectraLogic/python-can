@@ -44,9 +44,7 @@ class Listener(object):
         """This method is called to handle the given message.
 
         :param pycan.Message msg: the delivered message
-
         """
-        pass
 
     def __call__(self, msg):
         return self.on_message_received(msg)
@@ -136,7 +134,7 @@ if asyncio is not None:
         """A message buffer for use with :mod:`asyncio`.
 
         See :ref:`asyncio` for how to use with :class:`pycan.Notifier`.
-        
+
         Can also be used as an asynchronous iterator::
 
             async for msg in reader:
@@ -149,7 +147,7 @@ if asyncio is not None:
 
         def on_message_received(self, msg):
             """Append a message to the buffer.
-            
+
             Must only be called inside an event loop!
             """
             self.buffer.put_nowait(msg)
@@ -157,7 +155,7 @@ if asyncio is not None:
         def get_message(self):
             """
             Retrieve the latest message when awaited for::
-            
+
                 msg = await reader.get_message()
 
             :rtype: pycan.Message
@@ -167,6 +165,6 @@ if asyncio is not None:
 
         def __aiter__(self):
             return self
-        
+
         def __anext__(self):
             return self.buffer.get()

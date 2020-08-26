@@ -1,5 +1,5 @@
 """
-This module contains the implementation of :class:`~can.Notifier`.
+This module contains the implementation of :class:`~pycan.Notifier`.
 """
 
 import threading

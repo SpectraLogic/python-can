@@ -57,9 +57,9 @@ def main():
 
     state_group = parser.add_mutually_exclusive_group(required=False)
     state_group.add_argument('--active', help="Start the bus as active, this is applied by default.",
-                       action='store_true')
+                             action='store_true')
     state_group.add_argument('--passive', help="Start the bus as passive.",
-                       action='store_true')
+                             action='store_true')
 
     # print help message when no arguments wre given
     if len(sys.argv) < 2:

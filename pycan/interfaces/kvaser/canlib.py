@@ -239,12 +239,12 @@ if __canlib is not None:
                                                 errcheck=__check_status)
 
     canGetChannelData = __get_canlib_function("canGetChannelData",
-                                          argtypes=[ctypes.c_int,
-                                                    ctypes.c_int,
-                                                    ctypes.c_void_p,
-                                                    ctypes.c_size_t],
-                                          restype=canstat.c_canStatus,
-                                          errcheck=__check_status)
+                                              argtypes=[ctypes.c_int,
+                                                        ctypes.c_int,
+                                                        ctypes.c_void_p,
+                                                        ctypes.c_size_t],
+                                              restype=canstat.c_canStatus,
+                                              errcheck=__check_status)
 
     canRequestBusStatistics = __get_canlib_function("canRequestBusStatistics",
                                                     argtypes=[c_canHandle],
@@ -565,8 +565,8 @@ class KvaserBus(BusABC):
 
         try:
             kvFlashLeds(self._read_handle, action, 30000)
-        except (CANLIBError, NotImplementedError) as e:
-            log.error('Could not flash LEDs (%s)', e)
+        except (CANLIBError, NotImplementedError) as err:
+            log.error('Could not flash LEDs (%s)', err)
 
     def shutdown(self):
         # Wait for transmit queue to be cleared
